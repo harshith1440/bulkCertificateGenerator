@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.database import SessionLocal
 from app.models import GenerationJob, RecipientCertificate
@@ -105,7 +105,7 @@ def process_generation_job(job_id: str) -> None:
         else:
             job.status = "failed"
 
-        job.completed_at = datetime.utcnow()
+        job.completed_at = datetime.now(timezone.utc)
         db.commit()
 
     finally:
